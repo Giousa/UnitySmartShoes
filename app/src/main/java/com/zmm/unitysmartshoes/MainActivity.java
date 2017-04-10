@@ -1,5 +1,6 @@
 package com.zmm.unitysmartshoes;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     @InjectView(R.id.unity_framelayout)
     FrameLayout mUnityFramelayout;
-    private UnityPlayer mUnityPlayer;
-    protected static MainActivity Instance;
+    private PermanentUnityPlayer mUnityPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Instance = this;
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
@@ -33,18 +31,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mUnityPlayer = new UnityPlayer(this);
+        mUnityPlayer = new PermanentUnityPlayer(this);
         mUnityFramelayout.addView(mUnityPlayer);
     }
 
-    @OnClick({R.id.btn_left_rotate, R.id.btn_right_rotate})
+    @OnClick({R.id.btn_left_rotate, R.id.btn_right_rotate,R.id.btn_quit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_left_rotate:
                 break;
             case R.id.btn_right_rotate:
                 break;
+            case R.id.btn_quit:
+                quit();
+                break;
         }
+    }
+
+    private void quit() {
+        Intent intent = new Intent(this,TestActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             this.mUnityPlayer.quit();
             this.mUnityPlayer = null;
         }
-        Instance = null;
     }
 
     public void onConfigurationChanged(Configuration var1) {
