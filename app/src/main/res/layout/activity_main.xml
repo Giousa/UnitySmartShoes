@@ -43,11 +43,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_up_rotate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="顺时针旋转"/>
+
+        <Button
+            android:id="@+id/btn_down_rotate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="逆时针旋转"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_quit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="退出"/>
+        android:text="跳转"/>
 
 
 </LinearLayout>

@@ -4,18 +4,20 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import com.unity3d.player.UnityPlayer;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+    public static MainActivity Instance;
 
     @InjectView(R.id.unity_framelayout)
     FrameLayout mUnityFramelayout;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Instance = this;
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         initView();
@@ -33,25 +35,37 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mUnityPlayer = new PermanentUnityPlayer(this);
         mUnityFramelayout.addView(mUnityPlayer);
+
+        mUnityPlayer.UnitySendMessage("Shoe","SelectSence","one");
     }
 
-    @OnClick({R.id.btn_left_rotate, R.id.btn_right_rotate,R.id.btn_quit})
+    @OnClick({R.id.btn_left_rotate, R.id.btn_right_rotate,R.id.btn_up_rotate,R.id.btn_down_rotate,R.id.btn_quit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_left_rotate:
+                mUnityPlayer.UnitySendMessage("Shoe","rotateLeft","4");
                 break;
             case R.id.btn_right_rotate:
+                mUnityPlayer.UnitySendMessage("Shoe","rotateRight","4");
+                break;
+            case R.id.btn_up_rotate:
+                mUnityPlayer.UnitySendMessage("Shoe","rotateUp","4");
+                break;
+            case R.id.btn_down_rotate:
+                mUnityPlayer.UnitySendMessage("Shoe","rotateDown","4");
                 break;
             case R.id.btn_quit:
-                quit();
+                enter();
                 break;
         }
     }
 
-    private void quit() {
+    private void enter() {
         Intent intent = new Intent(this,TestActivity.class);
         startActivity(intent);
         finish();
+//        mUnityPlayer.UnitySendMessage("Shoe","SelectSence","two");
+//        mUnityPlayer.UnitySendMessage("Cube","isStart","1");
     }
 
     @Override
@@ -63,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         this.mUnityPlayer.resume();
     }
 
+    public void unityGameStart(){
+        Log.d(TAG,"---unity game start 1---");
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -70,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             this.mUnityPlayer.quit();
             this.mUnityPlayer = null;
         }
+
+        Instance = null;
     }
 
     public void onConfigurationChanged(Configuration var1) {

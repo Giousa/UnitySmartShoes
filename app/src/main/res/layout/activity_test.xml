@@ -10,4 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="退出"/>
+
+    <FrameLayout
+        android:background="#880000ff"
+        android:id="@+id/unity_framelayout"
+        android:layout_gravity="center"
+        android:layout_width="500px"
+        android:layout_height="500px"/>
 </LinearLayout>
