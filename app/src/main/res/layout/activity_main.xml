@@ -68,7 +68,13 @@
         android:id="@+id/btn_quit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="跳转"/>
+        android:text="切换"/>
+
+    <Button
+        android:id="@+id/btn_rotate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="转圈"/>
 
 
 </LinearLayout>
